@@ -12,7 +12,7 @@ public class Tokenizer {
 	/**
 	 * Contiene informacion sobre los tokens encontrados.
 	 */
-	private List<Token> tokens = new LinkedList<Token>();
+	private LinkedList<Token> tokens = new LinkedList<Token>();
 
 	public void add(String regex, int token) {
 		tokenInfos.add(new TokenInfo(Pattern.compile("^(" + regex + ")"), token));
@@ -47,7 +47,7 @@ public class Tokenizer {
 		}
 	}// tokenize
 
-	public List<Token> getTokens() {
+	public LinkedList<Token> getTokens() {
 		return tokens;
 	}
 }// Tokenizer

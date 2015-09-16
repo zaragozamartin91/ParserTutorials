@@ -1,5 +1,7 @@
 package parser.token;
 
+import com.google.gson.Gson;
+
 public class Token {
 	/** Token id for the epsilon terminal */
 	public static final int EPSILON = 0;
@@ -44,4 +46,14 @@ public class Token {
 		this.pos = pos;
 	}
 
+	public Token(int token, String sequence) {
+		super();
+		this.token = token;
+		this.sequence = sequence;
+		this.pos = -1;
+	}
+
+	public String toString() {
+		return new Gson().toJson(this);
+	}
 }
