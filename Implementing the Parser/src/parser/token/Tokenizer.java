@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jdk.nashorn.internal.runtime.ParserException;
+import parser.ParserException;
+
 
 public class Tokenizer {
 	private List<TokenInfo> tokenInfos = new LinkedList<TokenInfo>();

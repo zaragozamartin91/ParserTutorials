@@ -31,7 +31,7 @@ public class Parser {
 	}
 
 	private void nextToken() {
-		__print("previous token: " + lookahead);
+		__print("SEQUENCE: " + lookahead.sequence + " CONSUMED!");
 
 		tokens.pop();
 		if (tokens.isEmpty()) {
@@ -138,6 +138,7 @@ public class Parser {
 
 			nextToken();
 		} else {
+			__print("argument -> value");
 			// argument -> value
 			value();
 		}
