@@ -4,6 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import parser.tree.node.impl.AdditionExpressionNode;
+import parser.tree.node.impl.ConstantExpressionNode;
+import parser.tree.node.impl.ExponentiationExpressionNode;
+import parser.tree.node.impl.FunctionExpressionNode;
+import parser.tree.node.impl.MultiplicationExpressionNode;
+import parser.tree.node.impl.SequenceExpressionNode;
+
 public class ExpressionNodeTest {
 
 	private static final double DELTA = 0.0000000000000000001;

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import parser.token.StandardTokenizerBuilder;
 import parser.token.Token;
 import parser.token.Tokenizer;
 import parser.tree.node.ExpressionNode;
@@ -47,15 +48,16 @@ public class ParserTest {
 		System.out.println("testParseAndGetValue----------------------------------------------------------------------------------------");
 
 		try {
-			Tokenizer tokenizer = new Tokenizer();
-			tokenizer.add("sin|cos|exp|ln|sqrt", FUNCTION); // function
-			tokenizer.add("\\(", OPEN_BRACKET); // open bracket
-			tokenizer.add("\\)", CLOSE_BRACKET); // close bracket
-			tokenizer.add("[+-]", PLUSMINUS); // plus or minus
-			tokenizer.add("[*/]", MULTDIV); // mult or divide
-			tokenizer.add("\\^", RAISED); // raised
-			tokenizer.add("[0-9]+", NUMBER); // integer number
-			tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", VARIABLE); // variable
+			// Tokenizer tokenizer = new Tokenizer();
+			// tokenizer.add("sin|cos|exp|ln|sqrt", FUNCTION); // function
+			// tokenizer.add("\\(", OPEN_BRACKET); // open bracket
+			// tokenizer.add("\\)", CLOSE_BRACKET); // close bracket
+			// tokenizer.add("[+-]", PLUSMINUS); // plus or minus
+			// tokenizer.add("[*/]", MULTDIV); // mult or divide
+			// tokenizer.add("\\^", RAISED); // raised
+			// tokenizer.add("[0-9]+", NUMBER); // integer number
+			// tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", VARIABLE); // variable
+			Tokenizer tokenizer = StandardTokenizerBuilder.create().buildTokenizer();
 
 			tokenizer.tokenize("3*2^4 + sqrt(1+3)");
 

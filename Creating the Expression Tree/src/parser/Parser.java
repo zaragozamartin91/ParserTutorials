@@ -3,13 +3,13 @@ package parser;
 import java.util.LinkedList;
 
 import parser.token.Token;
-import parser.tree.node.AdditionExpressionNode;
-import parser.tree.node.ConstantExpressionNode;
-import parser.tree.node.ExponentiationExpressionNode;
 import parser.tree.node.ExpressionNode;
-import parser.tree.node.FunctionExpressionNode;
-import parser.tree.node.MultiplicationExpressionNode;
-import parser.tree.node.VariableExpressionNode;
+import parser.tree.node.impl.AdditionExpressionNode;
+import parser.tree.node.impl.ConstantExpressionNode;
+import parser.tree.node.impl.ExponentiationExpressionNode;
+import parser.tree.node.impl.FunctionExpressionNode;
+import parser.tree.node.impl.MultiplicationExpressionNode;
+import parser.tree.node.impl.VariableExpressionNode;
 
 public class Parser {
 	private LinkedList<Token> tokens = new LinkedList<>();
