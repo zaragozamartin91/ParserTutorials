@@ -3,6 +3,9 @@ package parser;
 import java.util.LinkedList;
 
 import parser.token.Token;
+import parser.tree.node.ConstantExpressionNode;
+import parser.tree.node.ExpressionNode;
+import parser.tree.node.VariableExpressionNode;
 
 public class Parser {
 	private LinkedList<Token> tokens = new LinkedList<>();
@@ -144,18 +147,27 @@ public class Parser {
 		}
 	}
 
-	private void value() {
+	private ExpressionNode value() {
 		if (lookahead.token == Token.NUMBER) {
 			__print("value -> NUMBER");
 			// value -> NUMBER
+			ExpressionNode expr = new ConstantExpressionNode(lookahead.sequence);
 			nextToken();
-		} else if (lookahead.token == Token.VARIABLE) {
+			return expr;
+		}
+
+		if (lookahead.token == Token.VARIABLE) {
 			__print("value -> VARIABLE");
 			// value -> VARIABLE
+			ExpressionNode expr = new VariableExpressionNode(lookahead.sequence);
 			nextToken();
-		} else {
-			throw new ParserException("Unexpected symbol " + lookahead.sequence + " found!");
+			return expr;
 		}
+
+		if (lookahead.token == Token.EPSILON)
+			throw new ParserException("Unexpected end of input");
+		else
+			throw new ParserException("Unexpected symbol %s found", lookahead);
 	}
 
 	private void signedTerm() {
