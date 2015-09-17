@@ -29,7 +29,8 @@ public class ExpressionNodeTest {
 		assertEquals(16.0, exp.getValue(), DELTA);
 
 		SequenceExpressionNode mult = new MultiplicationExpressionNode();
-		mult.add(new ConstantExpressionNode(3.0), true);
+		mult.add(new AdditionExpressionNode(new ConstantExpressionNode(3.0), true), true);
+//		mult.add(new ConstantExpressionNode(3.0), true);
 		mult.add(exp, true);
 		assertEquals(48.0, mult.getValue(), DELTA);
 
