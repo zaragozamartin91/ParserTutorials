@@ -56,7 +56,7 @@ public class ParserTest {
 			ExpressionNode expr = parser.parse("3*2^4 + sqrt(1+3)");
 			double result = expr.getValue();
 			System.out.println("value is " + result);
-			assertEquals(50.0, result , DELTA);
+			assertEquals(50.0, result, DELTA);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -76,7 +76,47 @@ public class ParserTest {
 
 			double result = expr.getValue();
 			System.out.println("result is " + result);
-			assertEquals(1.0, result , DELTA);
+			assertEquals(1.0, result, DELTA);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	@Test
+	public void testParseUsingVariablesAndStaticTokenizerConstructor() {
+		System.out.println("testParseUsingVariablesAndStaticTokenizerConstructor----------------------------------------------------------------------------------------");
+
+		try {
+			Tokenizer tokenizer = Tokenizer.createStandardExpressionTokenizer();
+
+			Parser parser = new Parser(tokenizer);
+			ExpressionNode expr = parser.parse("sin(pi/2)");
+			expr.accept(new SetVariable("pi", Math.PI));
+
+			double result = expr.getValue();
+			System.out.println("result is " + result);
+			assertEquals(1.0, result, DELTA);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	
+	@Test
+	public void testParseComplexExpression() {
+		System.out.println("testParseComplexExpression----------------------------------------------------------------------------------------");
+
+		try {
+			Tokenizer tokenizer = Tokenizer.createStandardExpressionTokenizer();
+
+			Parser parser = new Parser(tokenizer);
+			ExpressionNode expr = parser.parse("(3^2 -2 +7) / 7");
+
+			double result = expr.getValue();
+			System.out.println("result is " + result);
+			assertEquals(2.0, result, DELTA);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

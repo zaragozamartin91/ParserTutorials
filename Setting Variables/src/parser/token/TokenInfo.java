@@ -11,4 +11,9 @@ public class TokenInfo {
 		this.regex = regex;
 		this.token = token;
 	}
+
+	public TokenInfo(String s_regex, int tokenType) {
+		this.regex = Pattern.compile("^(" + s_regex + ")");
+		this.token = tokenType;
+	}
 }// TokenInfo

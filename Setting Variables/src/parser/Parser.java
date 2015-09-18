@@ -44,7 +44,7 @@ public class Parser {
 	}
 
 	private void nextToken() {
-		__print("SEQUENCE: " + lookahead.sequence + " CONSUMED!");
+		__print(lookahead.sequence + " CONSUMED!");
 
 		tokens.pop();
 		if (tokens.isEmpty()) {

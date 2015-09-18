@@ -19,7 +19,7 @@ public class StandardTokenizerBuilder implements TokenizerBuilder {
 		tokenizer.add("[+-]", PLUSMINUS); // plus or minus
 		tokenizer.add("[*/]", MULTDIV); // mult or divide
 		tokenizer.add("\\^", RAISED); // raised
-		tokenizer.add("[0-9]+", NUMBER); // integer number
+		tokenizer.add("[0-9]*\\.?[0-9]+", NUMBER); // Double number
 		tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", VARIABLE); // variable
 
 		return tokenizer;
