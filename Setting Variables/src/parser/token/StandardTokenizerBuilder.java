@@ -13,14 +13,14 @@ public class StandardTokenizerBuilder implements TokenizerBuilder {
 	@Override
 	public Tokenizer buildTokenizer() {
 		Tokenizer tokenizer = new Tokenizer();
-		tokenizer.add("sin|cos|exp|ln|sqrt", FUNCTION); // function
-		tokenizer.add("\\(", OPEN_BRACKET); // open bracket
-		tokenizer.add("\\)", CLOSE_BRACKET); // close bracket
-		tokenizer.add("[+-]", PLUSMINUS); // plus or minus
-		tokenizer.add("[*/]", MULTDIV); // mult or divide
-		tokenizer.add("\\^", RAISED); // raised
-		tokenizer.add("[0-9]*\\.?[0-9]+", NUMBER); // Double number
-		tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", VARIABLE); // variable
+		tokenizer.add("sin|cos|exp|ln|sqrt", FUNCTION); 
+		tokenizer.add("\\(", OPEN_BRACKET); 
+		tokenizer.add("\\)", CLOSE_BRACKET);
+		tokenizer.add("[+-]", PLUSMINUS); 
+		tokenizer.add("[*/]", MULTDIV); 
+		tokenizer.add("\\^", RAISED);
+		tokenizer.add("[0-9]*\\.?[0-9]+", NUMBER); 
+		tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", VARIABLE); 
 
 		return tokenizer;
 	}

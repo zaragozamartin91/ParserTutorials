@@ -15,7 +15,7 @@ public class Token {
 	public static final int PLUSMINUS = 1;
 	/** multiplicacion division */
 	public static final int MULTDIV = 2;
-	/** exponencial  */
+	/** exponencial */
 	public static final int RAISED = 3;
 	/** nombres de funciones: sin ln sqrt, etc... */
 	public static final int FUNCTION = 4;
@@ -23,18 +23,17 @@ public class Token {
 	public static final int OPEN_BRACKET = 5;
 	/** ) */
 	public static final int CLOSE_BRACKET = 6;
-	/** representa numeros  */
+	/** representa numeros */
 	public static final int NUMBER = 7;
 	/** nombres de variables como C17 , var_21, etc... */
 	public static final int VARIABLE = 8;
 
-	/** idr */
+	/** id de token */
 	public final int token;
 	/** secuencia a partir se obtuvo el token */
 	public final String sequence;
 	/** posicion que ocupaba la secuencia en el String original */
 	public final int pos;
-
 
 	public Token(int type, String sequence, int pos) {
 		super();

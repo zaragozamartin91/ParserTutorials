@@ -29,5 +29,4 @@ public class ExponentiationExpressionNode implements ExpressionNode {
 		base.accept(visitor);
 		exponent.accept(visitor);
 	}
-
 }
