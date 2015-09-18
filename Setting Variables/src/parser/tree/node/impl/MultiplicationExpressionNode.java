@@ -1,6 +1,7 @@
 package parser.tree.node.impl;
 
 import parser.tree.node.ExpressionNode;
+import parser.tree.node.ExpressionNodeVisitor;
 import parser.tree.node.Term;
 
 public class MultiplicationExpressionNode extends SequenceExpressionNode {
@@ -30,5 +31,13 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode {
 		}
 
 		return prod;
+	}
+
+	@Override
+	public void accept(ExpressionNodeVisitor visitor) {
+		visitor.visit(this);
+		for (Term term : terms) {
+			term.expression.accept(visitor);
+		}
 	}
 }

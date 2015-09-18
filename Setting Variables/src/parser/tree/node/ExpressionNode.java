@@ -15,4 +15,6 @@ public interface ExpressionNode {
 	public int getType();
 
 	public double getValue();
+	
+	public void accept(ExpressionNodeVisitor visitor);
 }

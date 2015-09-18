@@ -3,6 +3,7 @@ package parser.tree.node.impl;
 import parser.ParserException;
 import parser.tree.node.EvaluationException;
 import parser.tree.node.ExpressionNode;
+import parser.tree.node.ExpressionNodeVisitor;
 
 public class FunctionExpressionNode implements ExpressionNode {
 	public static final int SIN = 1;
@@ -36,28 +37,28 @@ public class FunctionExpressionNode implements ExpressionNode {
 	// TODO: REFACTORIZAR USANDO LAMBDAS Y MAPAS
 	public double getValue() {
 		switch (function) {
-		case SIN:
-			return Math.sin(argument.getValue());
-		case COS:
-			return Math.cos(argument.getValue());
-		case TAN:
-			return Math.tan(argument.getValue());
-		case ASIN:
-			return Math.asin(argument.getValue());
-		case ACOS:
-			return Math.acos(argument.getValue());
-		case ATAN:
-			return Math.atan(argument.getValue());
-		case SQRT:
-			return Math.sqrt(argument.getValue());
-		case EXP:
-			return Math.exp(argument.getValue());
-		case LN:
-			return Math.log(argument.getValue());
-		case LOG:
-			return Math.log(argument.getValue()) * 0.43429448190325182765;
-		case LOG2:
-			return Math.log(argument.getValue()) * 1.442695040888963407360;
+			case SIN:
+				return Math.sin(argument.getValue());
+			case COS:
+				return Math.cos(argument.getValue());
+			case TAN:
+				return Math.tan(argument.getValue());
+			case ASIN:
+				return Math.asin(argument.getValue());
+			case ACOS:
+				return Math.acos(argument.getValue());
+			case ATAN:
+				return Math.atan(argument.getValue());
+			case SQRT:
+				return Math.sqrt(argument.getValue());
+			case EXP:
+				return Math.exp(argument.getValue());
+			case LN:
+				return Math.log(argument.getValue());
+			case LOG:
+				return Math.log(argument.getValue()) * 0.43429448190325182765;
+			case LOG2:
+				return Math.log(argument.getValue()) * 1.442695040888963407360;
 		}
 		throw new EvaluationException("Invalid function id " + function + "!");
 	}
@@ -97,6 +98,12 @@ public class FunctionExpressionNode implements ExpressionNode {
 	// create a regular expression that identifies functions inside a string.
 	public static String getAllFunctions() {
 		return "sin|cos|tan|asin|acos|atan|sqrt|exp|ln|log|log2";
+	}
+
+	@Override
+	public void accept(ExpressionNodeVisitor visitor) {
+		visitor.visit(this);
+		argument.accept(visitor);
 	}
 
 }

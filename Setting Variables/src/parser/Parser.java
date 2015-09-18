@@ -3,6 +3,7 @@ package parser;
 import java.util.LinkedList;
 
 import parser.token.Token;
+import parser.token.Tokenizer;
 import parser.tree.node.ExpressionNode;
 import parser.tree.node.impl.AdditionExpressionNode;
 import parser.tree.node.impl.ConstantExpressionNode;
@@ -14,6 +15,7 @@ import parser.tree.node.impl.VariableExpressionNode;
 public class Parser {
 	private LinkedList<Token> tokens = new LinkedList<>();
 	private Token lookahead;
+
 
 	public ExpressionNode parse(LinkedList<Token> tokens) {
 		this.tokens = (LinkedList<Token>) tokens.clone();

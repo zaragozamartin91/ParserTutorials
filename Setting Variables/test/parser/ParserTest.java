@@ -11,12 +11,15 @@ import parser.token.StandardTokenizerBuilder;
 import parser.token.Token;
 import parser.token.Tokenizer;
 import parser.tree.node.ExpressionNode;
+import parser.tree.node.impl.SetVariable;
 import static parser.token.Token.*;
 
 public class ParserTest {
 
 	@Test
 	public void testParse() {
+		System.out.println("testParse----------------------------------------------------------------------------------------");
+
 		try {
 			Tokenizer tokenizer = new Tokenizer();
 			tokenizer.add("sin|cos|exp|ln|sqrt", FUNCTION); // function
@@ -75,4 +78,28 @@ public class ParserTest {
 		}
 	}
 
+	@Test
+	public void testParseUsingVariables() {
+		System.out.println("testParseUsingVariables----------------------------------------------------------------------------------------");
+
+		try {
+			Tokenizer tokenizer = StandardTokenizerBuilder.create().buildTokenizer();
+
+			tokenizer.tokenize("sin(pi/2)");
+
+			LinkedList<Token> tokens = tokenizer.getTokens();
+			for (Token token : tokens) {
+				System.out.println(token.token + " : " + token.sequence);
+			}
+
+			Parser parser = new Parser();
+			ExpressionNode expr = parser.parse(tokens);
+			expr.accept(new SetVariable("pi", Math.PI));
+
+			System.out.println("result is " + expr.getValue());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 }

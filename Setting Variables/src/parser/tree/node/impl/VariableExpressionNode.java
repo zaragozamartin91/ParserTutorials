@@ -2,6 +2,7 @@ package parser.tree.node.impl;
 
 import parser.tree.node.EvaluationException;
 import parser.tree.node.ExpressionNode;
+import parser.tree.node.ExpressionNodeVisitor;
 
 public class VariableExpressionNode implements ExpressionNode {
 	private String name;
@@ -27,5 +28,21 @@ public class VariableExpressionNode implements ExpressionNode {
 			return value;
 		else
 			throw new EvaluationException("Variable '" + name + "' was not initialized.");
+	}
+
+	public void accept(ExpressionNodeVisitor visitor) {
+		visitor.visit(this);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isValueSet() {
+		return valueSet;
 	}
 }
