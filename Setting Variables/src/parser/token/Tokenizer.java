@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import parser.ParserException;
 
-
 public class Tokenizer {
 	private List<TokenInfo> tokenInfos = new LinkedList<TokenInfo>();
 	/**
@@ -19,7 +18,7 @@ public class Tokenizer {
 		tokenInfos.add(new TokenInfo(Pattern.compile("^(" + regex + ")"), token));
 	}
 
-	public void tokenize(String str) {
+	public Tokenizer tokenize(String str) {
 		String s = str.trim();
 		// se limpia la lista de tokens encontrados
 		tokens.clear();
@@ -45,6 +44,8 @@ public class Tokenizer {
 				throw new ParserException("unexpected char in " + s);
 			}
 		}
+
+		return this;
 	}// tokenize
 
 	public LinkedList<Token> getTokens() {

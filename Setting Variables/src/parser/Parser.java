@@ -15,10 +15,16 @@ import parser.tree.node.impl.VariableExpressionNode;
 public class Parser {
 	private LinkedList<Token> tokens = new LinkedList<>();
 	private Token lookahead;
+	private Tokenizer tokenizer;
+	
 
+	public Parser(Tokenizer tokenizer) {
+		super();
+		this.tokenizer = tokenizer;
+	}
 
-	public ExpressionNode parse(LinkedList<Token> tokens) {
-		this.tokens = (LinkedList<Token>) tokens.clone();
+	public ExpressionNode parse(String toParse) {
+		this.tokens = tokenizer.tokenize(toParse).getTokens();
 		this.lookahead = this.tokens.getFirst();
 		__print("begin: " + lookahead);
 
