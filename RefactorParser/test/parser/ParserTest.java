@@ -122,4 +122,24 @@ public class ParserTest {
 			fail();
 		}
 	}
+	
+	
+	@Test
+	public void testParseMultipleAdditionsSubstractionsMultsAndDivs() {
+		System.out.println("testParseMultipleAdditionsSubstractionsMultsAndDivs----------------------------------------------------------------------------------------");
+
+		try {
+			Tokenizer tokenizer = Tokenizer.createStandardExpressionTokenizer();
+
+			Parser parser = new Parser(tokenizer);
+			ExpressionNode expr = parser.parse("(12.0 + 0.25 + 0.75 - 0.5 - 0.5 -11.0) * 3 * 2.0 * 2 / 4.0 / 3.0 * 98.98");
+
+			double result = expr.getValue();
+			System.out.println("result is " + result);
+			assertEquals(98.98, result, DELTA);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 }

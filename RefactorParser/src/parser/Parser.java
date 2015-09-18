@@ -73,10 +73,7 @@ public class Parser {
 
 			// sum_op -> PLUSMINUS term sum_op
 			AdditionExpressionNode sum;
-			if (expr.getType() == ExpressionNode.ADDITION_NODE)
-				sum = (AdditionExpressionNode) expr;
-			else
-				sum = new AdditionExpressionNode(expr, true);
+			sum = new AdditionExpressionNode(expr, true);
 
 			boolean positive = lookahead.sequence.equals("+");
 			nextToken();
@@ -101,17 +98,14 @@ public class Parser {
 	private ExpressionNode termOp(ExpressionNode expression) {
 		if (lookahead.token == Token.MULTDIV) {
 			__print("term_op -> MULTDIV signed_factor term_op");
+
 			MultiplicationExpressionNode prod;
+			prod = new MultiplicationExpressionNode(expression, true);
 
-			if (expression.getType() == ExpressionNode.MULTIPLICATION_NODE)
-				prod = (MultiplicationExpressionNode) expression;
-			else
-				prod = new MultiplicationExpressionNode(expression, true);
-
-			boolean positive = lookahead.sequence.equals("*");
+			boolean multi = lookahead.sequence.equals("*");
 			nextToken();
 			ExpressionNode f = signedFactor();
-			prod.add(f, positive);
+			prod.add(f, multi);
 
 			return termOp(prod);
 		}
