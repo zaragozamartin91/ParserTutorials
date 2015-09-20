@@ -13,8 +13,10 @@ public class Token {
 	public static final int EPSILON = 0;
 	/** mas menos */
 	public static final int PLUSMINUS = 1;
-	/** multiplicacion division */
-	public static final int MULTDIV = 2;
+	
+	public static final int MULT = 2;	
+	public static final int DIV = 9;
+	
 	/** exponencial */
 	public static final int RAISED = 3;
 	/** nombres de funciones: sin ln sqrt, etc... */
@@ -29,7 +31,7 @@ public class Token {
 	public static final int VARIABLE = 8;
 
 	/** id de token */
-	public final int token;
+	public final int tokenType;
 	/** secuencia a partir se obtuvo el token */
 	public final String sequence;
 	/** posicion que ocupaba la secuencia en el String original */
@@ -37,14 +39,14 @@ public class Token {
 
 	public Token(int type, String sequence, int pos) {
 		super();
-		this.token = type;
+		this.tokenType = type;
 		this.sequence = sequence;
 		this.pos = pos;
 	}
 
 	public Token(int token, String sequence) {
 		super();
-		this.token = token;
+		this.tokenType = token;
 		this.sequence = sequence;
 		this.pos = -1;
 	}

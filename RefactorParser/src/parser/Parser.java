@@ -16,7 +16,6 @@ public class Parser {
 	private LinkedList<Token> tokens = new LinkedList<>();
 	private Token lookahead;
 	private Tokenizer tokenizer;
-	
 
 	public Parser(Tokenizer tokenizer) {
 		super();
@@ -33,7 +32,7 @@ public class Parser {
 		// expression() will parse the non-terminal symbol expression
 		ExpressionNode expr = expression();
 
-		if (lookahead.token != Token.EPSILON)
+		if (lookahead.tokenType != Token.EPSILON)
 			throw new ParserException("Unexpected symbol %s found", lookahead);
 
 		return expr;
@@ -68,10 +67,10 @@ public class Parser {
 		// si el siguiente token es de tipo TERMINAL , entonces se debe
 		// desapilar un token y continuar con la secuencia
 
-		if (lookahead.token == Token.PLUSMINUS) {
+		if (lookahead.tokenType == Token.PLUSMINUS) {
 			__print("sum_op -> PLUSMINUS term sum_op");
-
 			// sum_op -> PLUSMINUS term sum_op
+
 			AdditionExpressionNode sum;
 			sum = new AdditionExpressionNode(expr, true);
 
@@ -96,16 +95,28 @@ public class Parser {
 	}
 
 	private ExpressionNode termOp(ExpressionNode expression) {
-		if (lookahead.token == Token.MULTDIV) {
+		if (lookahead.tokenType == Token.MULT) {
 			__print("term_op -> MULTDIV signed_factor term_op");
 
 			MultiplicationExpressionNode prod;
 			prod = new MultiplicationExpressionNode(expression, true);
 
-			boolean multi = lookahead.sequence.equals("*");
 			nextToken();
 			ExpressionNode f = signedFactor();
-			prod.add(f, multi);
+			prod.add(f, true);
+
+			return termOp(prod);
+		}
+		
+		if (lookahead.tokenType == Token.DIV) {
+			__print("term_op -> MULTDIV signed_factor term_op");
+
+			MultiplicationExpressionNode prod;
+			prod = new MultiplicationExpressionNode(expression, true);
+
+			nextToken();
+			ExpressionNode f = signedFactor();
+			prod.add(f, false);
 
 			return termOp(prod);
 		}
@@ -116,7 +127,7 @@ public class Parser {
 	}
 
 	private ExpressionNode signedFactor() {
-		if (lookahead.token == Token.PLUSMINUS) {
+		if (lookahead.tokenType == Token.PLUSMINUS) {
 			__print("signed_factor -> PLUSMINUS factor");
 			// signed_factor -> PLUSMINUS factor
 			boolean positive = lookahead.sequence.equals("+");
@@ -142,7 +153,7 @@ public class Parser {
 	}
 
 	private ExpressionNode factorOp(ExpressionNode expression) {
-		if (lookahead.token == Token.RAISED) {
+		if (lookahead.tokenType == Token.RAISED) {
 			__print("factor_op -> RAISED expression");
 			// factor_op -> RAISED expression
 			nextToken();
@@ -155,7 +166,7 @@ public class Parser {
 	}
 
 	private ExpressionNode argument() {
-		if (lookahead.token == Token.FUNCTION) {
+		if (lookahead.tokenType == Token.FUNCTION) {
 			__print("argument -> FUNCTION argument");
 			// argument -> FUNCTION argument
 			int function = FunctionExpressionNode.stringToFunction(lookahead.sequence);
@@ -164,14 +175,15 @@ public class Parser {
 			return new FunctionExpressionNode(function, expr);
 		}
 
-		if (lookahead.token == Token.OPEN_BRACKET) {
+		if (lookahead.tokenType == Token.OPEN_BRACKET) {
 			__print("argument -> OPEN_BRACKET expression CLOSE_BRACKET");
 			// argument -> OPEN_BRACKET expression CLOSE_BRACKET
 			nextToken();
 			ExpressionNode expr = expression();
 
-			if (lookahead.token != Token.CLOSE_BRACKET) {
-				throw new ParserException("Close brackets expected, " + lookahead.sequence + " found instead!");
+			if (lookahead.tokenType != Token.CLOSE_BRACKET) {
+				throw new ParserException("Close brackets expected, " + lookahead.sequence
+						+ " found instead!");
 			}
 
 			nextToken();
@@ -184,7 +196,7 @@ public class Parser {
 	}
 
 	private ExpressionNode value() {
-		if (lookahead.token == Token.NUMBER) {
+		if (lookahead.tokenType == Token.NUMBER) {
 			__print("value -> NUMBER");
 			// value -> NUMBER
 			ExpressionNode expr = new ConstantExpressionNode(lookahead.sequence);
@@ -192,7 +204,7 @@ public class Parser {
 			return expr;
 		}
 
-		if (lookahead.token == Token.VARIABLE) {
+		if (lookahead.tokenType == Token.VARIABLE) {
 			__print("value -> VARIABLE");
 			// value -> VARIABLE
 			ExpressionNode expr = new VariableExpressionNode(lookahead.sequence);
@@ -200,7 +212,7 @@ public class Parser {
 			return expr;
 		}
 
-		if (lookahead.token == Token.EPSILON)
+		if (lookahead.tokenType == Token.EPSILON)
 			throw new ParserException("Unexpected end of input");
 		else
 			throw new ParserException("Unexpected symbol %s found", lookahead);
@@ -211,17 +223,13 @@ public class Parser {
 		// eat it up and then parse the non-terminal term. Otherwise we parse
 		// the non-terminal term directly
 
-		if (lookahead.token == Token.PLUSMINUS) {
+		if (lookahead.tokenType == Token.PLUSMINUS) {
 			__print("signedTerm -> PLUSMINUS term");
 			// signedTerm -> PLUSMINUS term
 			boolean positive = lookahead.sequence.equals("+");
 			nextToken();
 			ExpressionNode expr = term();
-			if (positive) {
-				return expr;
-			} else {
-				return new AdditionExpressionNode(expr, false);
-			}
+			return new AdditionExpressionNode(expr, positive);
 		}
 
 		__print("signedTerm -> term");

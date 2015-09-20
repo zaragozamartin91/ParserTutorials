@@ -1,9 +1,10 @@
 package parser.token;
 
-import static org.junit.Assert.*;
-import jdk.nashorn.internal.runtime.ParserException;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
+
+import parser.ParserException;
 
 public class TokenizerTest {
 
@@ -31,7 +32,7 @@ public class TokenizerTest {
 			tokenizer.tokenize(" sin(x) * (1 + var_12) ");
 
 			for (Token tok : tokenizer.getTokens()) {
-				System.out.println("" + tok.token + " " + tok.sequence);
+				System.out.println("" + tok.tokenType + " " + tok.sequence);
 			}
 		} catch (ParserException e) {
 			System.out.println(e.getMessage());
@@ -63,7 +64,7 @@ public class TokenizerTest {
 			tokenizer.tokenize(" sin(x) * (1 + var_12) + 12.25 * 1.0-C17");
 
 			for (Token tok : tokenizer.getTokens()) {
-				System.out.println("" + tok.token + " " + tok.sequence);
+				System.out.println("" + tok.tokenType + " " + tok.sequence);
 			}
 		} catch (ParserException e) {
 			System.out.println(e.getMessage());
