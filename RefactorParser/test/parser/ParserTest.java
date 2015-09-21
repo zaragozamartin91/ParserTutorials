@@ -38,6 +38,31 @@ public class ParserTest {
 			fail();
 		}
 	}
+	
+	@Test
+	public void testParseUsingSheetColumnRowVariables() {
+		System.out.println("testParseUsingSheetColumnRowVariables----------------------------------------------------------------------------------------");
+
+		try {
+			Tokenizer tokenizer = new Tokenizer();
+			tokenizer.add("sin|cos|exp|ln|sqrt", FUNCTION); // function
+			tokenizer.add("\\(", OPEN_BRACKET); // open bracket
+			tokenizer.add("\\)", CLOSE_BRACKET); // close bracket
+			tokenizer.add("[+-]", PLUSMINUS); // plus or minus
+			tokenizer.add("[*]", MULT); // mult or divide
+			tokenizer.add("[/]", DIV); // mult or divide
+			tokenizer.add("\\^", RAISED); // raised
+			tokenizer.add("[0-9]+", NUMBER); // integer number
+//			tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", VARIABLE); // variable
+			tokenizer.add("\\w+![A-Z]\\d+",VARIABLE);
+			
+			Parser parser = new Parser(tokenizer);
+			ExpressionNode expr = parser.parse(" 17 + 2 - hoja1!C22 ");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
 	@Test
 	public void testParseAndGetValue() {
